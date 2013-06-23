@@ -1,0 +1,127 @@
+!!! 5
+//if lt IE 7
+   html(class="no-js ie6 oldie", lang="en", "data-ng-app='arashin'")
+//if IE 7
+   html(class="no-js ie7 oldie", lang="en", "data-ng-app='arashin'")
+//if IE 8
+   html(class="no-js ie8 oldie", lang="en", "data-ng-app='arashin'")
+// if gt IE 8] <!
+html(class="no-js", lang="en", "data-ng-app='arashin'")
+   // <![endif]
+   head
+
+      meta(charset='utf-8')
+      //- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+      meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+      //- Mobile viewport optimized: h5bp.com/viewport
+      meta(name='viewport', content='width=device-width')
+
+      title= appName + ' - ' + title
+
+      link(href='http://fonts.googleapis.com/css?family=Source+Sans+Pro|Droid+Serif', rel='stylesheet', type='text/css')
+      link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+      link(rel='stylesheet', href='/stylesheets/bootstrap-responsive.css')
+      link(rel='stylesheet', href='/stylesheets/bootstrap-notify.css')
+      link(rel='stylesheet', href='/stylesheets/bootstrap-customizer.css')
+      link(rel='stylesheet', href='/stylesheets/font-awesome.css')
+      link(rel='stylesheet', href='/stylesheets/angular-ui.css')
+      //if IE 7
+         link(rel='stylesheet', href='/stylesheets/font-awesome-ie7.css')
+
+      link(rel='stylesheet', href='/stylesheets/admin.css')
+
+      link(rel='shortcut icon',                                 href='/ico/favicon.ico')
+      link(rel='apple-touch-icon-precomposed', sizes='144x144', href='/ico/apple-touch-icon-144-precomposed.png')
+      link(rel='apple-touch-icon-precomposed', sizes='114x114', href='/ico/apple-touch-icon-114-precomposed.png')
+      link(rel='apple-touch-icon-precomposed', sizes='72x72',   href='/ico/apple-touch-icon-72-precomposed.png')
+      link(rel='apple-touch-icon-precomposed',                  href='/ico/apple-touch-icon-57-precomposed.png')
+
+      script(src='/javascripts/modernizr-2.6.1.min.js')
+
+   block head
+
+   div.navbar.navbar-inverse.navbar-fixed-top
+      div.navbar-inner
+         div.container-fluid
+            button.btn.btn-navbar(data-toggle="collapse", data-target=".nav-collapse")
+               span.icon-bar
+               span.icon-bar
+               span.icon-bar
+            a.brand(href='/') #{appName} - Dashboard
+            div.nav-collapse.collapse
+               ul.nav
+                  li.active
+                     a(href='/dashboard', rel='tooltip', title='Dashboard Home') Home
+
+               ul.nav.pull-right
+                  //- li
+                  //-   a(href="/profile/" + current_user.id, title="Profile") Profile
+                  if (request.isAuthenticated())
+                     li
+                        a(href="/logout", title="logout") Logout
+                  else
+                     li
+                        a.facebook-login(href="/login", title="Login") Login
+
+
+   != messages()
+   div.notifications.top-right
+
+   div.container-fluid
+      div.row-fluid
+         div.span3
+            div.sidebar-nav.sidebar-nav-fixed.well
+               ul.nav.nav-list
+                  //
+                     li.nav-header Articles
+                     li
+                        a(href="/articles") List
+                     li
+                        a(href="/articles/new") New
+
+                  li.nav-header Posts
+                  li
+                     a(href="/admin/posts/index") All Posts
+
+         div.span9
+            block body
+
+      hr
+
+   footer.footer
+      div.container
+         p.pull-right
+            a(href='#') Back to top
+         p &copy; arashin 2012
+
+   script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
+       script
+         window.jQuery || document.write('<script src="javascripts/jquery-1.7.2.min.js"><\\/script>')
+
+   //- load angular from Google CDN
+   //- script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js')
+   script(src='/javascripts/angular/angular-1.0.1.js')
+   script(src='/javascripts/angular/angular-resource-1.0.1.js')
+   script(src='/javascripts/angular/angular-ui.js')
+   script(src='/javascripts/angular/angular-ui-ieshiv.js')
+
+   script(src='/javascripts/bootstrap/bootstrap-transition.js')
+   script(src='/javascripts/bootstrap/bootstrap-alert.js')
+   script(src='/javascripts/bootstrap/bootstrap-modal.js')
+   script(src='/javascripts/bootstrap/bootstrap-dropdown.js')
+   script(src='/javascripts/bootstrap/bootstrap-scrollspy.js')
+   script(src='/javascripts/bootstrap/bootstrap-tab.js')
+   script(src='/javascripts/bootstrap/bootstrap-tooltip.js')
+   script(src='/javascripts/bootstrap/bootstrap-popover.js')
+   script(src='/javascripts/bootstrap/bootstrap-button.js')
+   script(src='/javascripts/bootstrap/bootstrap-collapse.js')
+   script(src='/javascripts/bootstrap/bootstrap-carousel.js')
+   script(src='/javascripts/bootstrap/bootstrap-typeahead.js')
+   script(src='/javascripts/bootstrap/bootstrap-affix.js')
+
+   script(src='/javascripts/bootstrap/bootstrap-notify.js')
+   script(src='/javascripts/moment.js')
+
+   script(src='/javascripts/arashin/arashin.core.js')
+
+   block scripts

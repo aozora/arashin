@@ -1,0 +1,33 @@
+p
+   a.btn.btn-success(href="#/new") New Post
+
+p(data-ng-show="hasPosts") There aren't any post. Why not create one?
+
+table.table(data-ng-show="hasPosts")
+   thead
+      tr
+         th Title
+         th Tags
+         th Allow Comments
+         th Comments #
+         th Created
+         th Edited
+         th Published
+         th
+   tbody
+      tr(data-ng-repeat="post in posts")
+         td {{post.title}}
+         td {{post.tags}}
+         td {{post.allowComments}}
+         td {{post.commentsCount}}
+         td(rel="tooltip", title="{{post.created_at | date:'shortDate'}}") {{post.created_at | fromNow}}
+         td {{post.edited_at}}
+         td {{post.published_at}}
+         td
+            a.btn.edit(href="#/{{post._id}}")
+               i.icon-pencil
+               | Edit
+
+            a.btn.delete(data-ng-click="remove(post)")
+               i.icon-remove
+               | Remove
