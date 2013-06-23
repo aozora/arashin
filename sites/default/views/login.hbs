@@ -1,0 +1,27 @@
+{{! ISSUE: Bootstrap bug, without label forms are not centered, we can insert empty label too, we can add a offset on form (see user_form.hbs) 
+Label example:           <label class="control-label" for="id_username"></label> OffSet example: offset2 in form class}}
+
+
+<div class="row">
+<div class="span3"></div>
+<div class="span6">
+    <form method="POST" action="/login"> 
+        <div class="control-group">
+            <div class="controls">
+                <input type="text" name="email" value="{{email}}" class="span6" placeholder="Email" />
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <input type="password" name="password" class="span6" placeholder="Password"/>
+            </div>
+         </div>
+         <div class="control-group">
+             <div class="controls">
+                <p><input type="submit" class="btn btn-block" value="{{translate "signin" session.language mapping}}"></p>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="span3"></div>
+</div>

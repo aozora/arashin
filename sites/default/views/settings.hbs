@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="span8">
+        <form action="/settings" method="POST"> 
+            <textarea rows="20" class="span12" name="value">{{#if data}}{{data}}{{else}}New...{{/if}}</textarea>
+            <input type='submit' class='btn btn-block' value="{{translate "send" session.language mapping}}">
+        </form>
+    </div>
+    <div class="span4">
+        {{{view_list mapping}}}
+    </div>
+
+</div>

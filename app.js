@@ -1,67 +1,87 @@
-/* Main application entry file. Please note, the order of loading is important.
- * Configuration loading and booting of controllers and custom error handlers */
-console.log('start');
-console.log('ENV: ' + process.env.NODE_ENV);
-
-var express = require('express')
-   ,fs = require('fs')
-   ,utils = require('./utils/utils')
-   ,auth = require('./lib/authorization')
-   ,http = require('http');
-
-
-// Load configurations
-exports = module.exports = config = require('./config').config();
-console.log('config: ok');
-
-// init authentication strategies
-require('./lib/authentication');
-console.log('require authentication: ok');
-
-// init db connection
-require('./lib/db-connect');
-console.log('require db-connect: ok');
-
-// Bootstrap models
-var models_path = __dirname + '/app/models'
-   ,model_files = fs.readdirSync(models_path);
-
-model_files.forEach(function (file) {
-   if (file == 'user.js')
-      User = require(models_path + '/' + file);
-   else if (file !== '.svn')
-      require(models_path + '/' + file);
-});
-console.log('models: ok');
-
-
-// express 3.x app
+/*
+ * MuContent
+ * 
+ * Starting application with clustering for multicore CPUs
+ * 
+ */
+	
+// REQUIREMENTS
+var fs = require('fs');
+var cluster = require('cluster');
+var Config = require('./config');
+var express = require('express');
 var app = express();
+var utils = require('./lib/utils');
+var parameters = require('./params');
 
-// Bootstrap application settings
-require('./settings').boot(app);
-console.log('settings boot: ok');
+// Instance the configuration class
+var configuration = new Config();
 
+// See CPU number for clustering
+var numCPUs = require('os').cpus().length;
 
-// Bootstrap controllers
-var controllers_path = __dirname + '/app/controllers'
-   ,controller_files = fs.readdirSync(controllers_path);
+// If app.js goes down, app works thanks to workers
+// if all workers go down and app.js is up, the app doesn't work
+if (cluster.isMaster) {
 
-controller_files.forEach(function (file) {
-   if (file !== '.svn')
-      require(controllers_path + '/' + file)(app, auth);
-});
-console.log('controllers: ok');
+    // Fork workers.
+    for (var i = 0; i < numCPUs; i++) {
+        cluster.fork();
+    }
 
+    cluster.on('exit', function(worker) {
+        utils.applog('warn', 'Worker ' + worker.pid + ' died. Restart...');
+	// refork the process if one death
+	cluster.fork();
+    });
 
+} else {
+	
+    // Instance the application
+    configuration.Application(app);
 
-//require('./error-handler').boot(app);   // Bootstrap custom error handler
-//console.log('error-handler boot: ok');
+    // get all controller as a module (all function is route)
+    fs.readdir(__dirname + '/controller', function (err, files) {
+        files.forEach(function(item) {
+            require('./controller/' + item).route(app);
+        });
+    });
 
+    // Define server variable
+    var server;
+	
+    // If https params is set start with https
+    if (parameters.https_options) {
+        // require https library
+	var https = require('https');
+		
+	// Get the credentials and create HTTPS server
+	var pk = fs.readFileSync(parameters.https_options.private_key).toString();
+	var pc = fs.readFileSync(parameters.https_options.certificate).toString();
+	var server = https.createServer({key: pk, cert: pc}, app);
+	
+	// Start listening
+	server.listen(parameters.client_port, parameters.client_host);
 
+    } else {
+	var server = require('http').createServer(app)
+	// Else start listening in http
+	server.listen(parameters.client_port, parameters.client_host);
 
-// Start the app by listening on <port>
-var port = process.env.PORT || 3000;
-//app.listen(port);
-http.createServer(app).listen(port);
-console.log('Express app started on port ' + port);
+    }
+
+    // If realtime application is defined, start socket.io
+    if (parameters.realtime) {
+        // Require socket.io liberary
+        var sio = require('socket.io');
+        // Start Socket.io
+        var io = sio.listen(server);
+
+        // Call the Socket.io configuration definition
+        configuration.SocketIO(io);
+	
+        // Call the Socket.io definition
+        require('./realtime').realtime(io);
+    }
+
+}
