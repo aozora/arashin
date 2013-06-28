@@ -62,11 +62,16 @@ if (parameters.https_options) {
 
    // Start listening
    server.listen(parameters.client_port, parameters.client_host);
+   utils.applog('info', 'started web server, listening ' + parameters.client_host + ':' + parameters.client_port);
+   console.log('started web server, listening ' + parameters.client_host + ':' + parameters.client_port);
 
 } else {
+
    var server = require('http').createServer(app)
    // Else start listening in http
    server.listen(parameters.client_port, parameters.client_host);
+   utils.applog('info', 'started web server, listening ' + parameters.client_host + ':' + parameters.client_port);
+   console.log('started web server, listening ' + parameters.client_host + ':' + parameters.client_port)
 }
 
 // If realtime application is defined, start socket.io
