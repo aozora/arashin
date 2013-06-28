@@ -4,7 +4,7 @@
  * Starting application with clustering for multicore CPUs
  * 
  */
-	
+
 // REQUIREMENTS
 var fs = require('fs');
 var cluster = require('cluster');
@@ -36,52 +36,51 @@ var numCPUs = require('os').cpus().length;
 //    });
 //
 //} else {
-	
-    // Instance the application
-    configuration.Application(app);
 
-    // get all controller as a module (all function is route)
-    fs.readdir(__dirname + '/controller', function (err, files) {
-        files.forEach(function(item) {
-            require('./controller/' + item).route(app);
-        });
-    });
+// Instance the application
+configuration.Application(app);
 
-    // Define server variable
-    var server;
-	
-    // If https params is set start with https
-    if (parameters.https_options) {
-        // require https library
-	var https = require('https');
-		
-	// Get the credentials and create HTTPS server
-	var pk = fs.readFileSync(parameters.https_options.private_key).toString();
-	var pc = fs.readFileSync(parameters.https_options.certificate).toString();
-	var server = https.createServer({key: pk, cert: pc}, app);
-	
-	// Start listening
-	server.listen(parameters.client_port, parameters.client_host);
+// get all controller as a module (all function is route)
+fs.readdir(__dirname + '/controller', function (err, files) {
+   files.forEach(function (item) {
+      require('./controller/' + item).route(app);
+   });
+});
 
-    } else {
-	var server = require('http').createServer(app)
-	// Else start listening in http
-	server.listen(parameters.client_port, parameters.client_host);
+// Define server variable
+var server;
 
-    }
+// If https params is set start with https
+if (parameters.https_options) {
+   // require https library
+   var https = require('https');
 
-    // If realtime application is defined, start socket.io
-    if (parameters.realtime) {
-        // Require socket.io liberary
-        var sio = require('socket.io');
-        // Start Socket.io
-        var io = sio.listen(server);
+   // Get the credentials and create HTTPS server
+   var pk = fs.readFileSync(parameters.https_options.private_key).toString();
+   var pc = fs.readFileSync(parameters.https_options.certificate).toString();
+   var server = https.createServer({key: pk, cert: pc}, app);
 
-        // Call the Socket.io configuration definition
-        configuration.SocketIO(io);
-	
-        // Call the Socket.io definition
-        require('./realtime').realtime(io);
-    }
+   // Start listening
+   server.listen(parameters.client_port, parameters.client_host);
+
+} else {
+   var server = require('http').createServer(app)
+   // Else start listening in http
+   server.listen(parameters.client_port, parameters.client_host);
+}
+
+// If realtime application is defined, start socket.io
+if (parameters.realtime) {
+   // Require socket.io liberary
+   var sio = require('socket.io');
+   // Start Socket.io
+   var io = sio.listen(server);
+
+   // Call the Socket.io configuration definition
+   configuration.SocketIO(io);
+
+   // Call the Socket.io definition
+   require('./realtime').realtime(io);
+}
 
 //}

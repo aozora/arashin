@@ -17,9 +17,9 @@ module.exports = {
 
     // COOKIE AND SESSIONS
     cookie_secret: '0acbd5c92bd99ba02bad5bab985a26c5',
-//    client_host: '0.0.0.0', // the client host
-    client_host: '127.0.0.1', // the client host
-    client_port: '8000', // the client port
+//    client_host: '127.0.0.1', // the client host
+    client_host: 'localhost', // the client host
+    client_port: '8080', // the client port
 	
     // Comment this options if you want http connection
     /*https_options: { //HTTPS Options
@@ -38,5 +38,5 @@ module.exports = {
     },
     
     // Error for site not found or other
-    server_error: "Sorry, server error, please contact: ",
+    server_error: "Sorry, server error, please contact: "
 };
