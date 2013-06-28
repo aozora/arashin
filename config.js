@@ -15,7 +15,7 @@ var utils = require('./lib/utils');
 var hbs = require('./lib/hbs');
 var sessionStore = new RedisStore();
 var fs = require('fs');
-var drex = require('./lib/drex.js');
+var drex = require('./lib/drex');
 // Require parameters class and instance it
 var parameters = require('./params');
 
