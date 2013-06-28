@@ -16,7 +16,8 @@
       "nodemailer":"*",
       "handlebars":"*",
       "winston":"*",
-      "drex":"*"
+      "drex":"*",
+      "knox":"*"
 	},
 	"optionalDependencies": {
 		"socket.io":"*"
