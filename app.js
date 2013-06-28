@@ -20,22 +20,22 @@ var configuration = new Config();
 // See CPU number for clustering
 var numCPUs = require('os').cpus().length;
 
-// If app.js goes down, app works thanks to workers
-// if all workers go down and app.js is up, the app doesn't work
-if (cluster.isMaster) {
-
-    // Fork workers.
-    for (var i = 0; i < numCPUs; i++) {
-        cluster.fork();
-    }
-
-    cluster.on('exit', function(worker) {
-        utils.applog('warn', 'Worker ' + worker.pid + ' died. Restart...');
-	// refork the process if one death
-	cluster.fork();
-    });
-
-} else {
+//// If app.js goes down, app works thanks to workers
+//// if all workers go down and app.js is up, the app doesn't work
+//if (cluster.isMaster) {
+//
+//    // Fork workers.
+//    for (var i = 0; i < numCPUs; i++) {
+//        cluster.fork();
+//    }
+//
+//    cluster.on('exit', function(worker) {
+//        utils.applog('warn', 'Worker ' + worker.pid + ' died. Restart...');
+//	// refork the process if one death
+//	cluster.fork();
+//    });
+//
+//} else {
 	
     // Instance the application
     configuration.Application(app);
@@ -84,4 +84,4 @@ if (cluster.isMaster) {
         require('./realtime').realtime(io);
     }
 
-}
+//}
