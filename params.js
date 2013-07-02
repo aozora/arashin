@@ -19,12 +19,12 @@ module.exports = {
     cookie_secret: '0acbd5c92bd99ba02bad5bab985a26c5',
 //    client_host: '127.0.0.1', // the client host
     client_host: 'localhost', // the client host
-    client_port: '8080', // the client port
+    client_port: '3000', // the client port
 	
     // Comment this options if you want http connection
     /*https_options: { //HTTPS Options
-	private_key: __dirname + '/certs/privatekey.pem', // the HTTPS private key
-	certificate: __dirname + '/certs/certificate.pem', // the HTTPS certificate
+      private_key: __dirname + '/certs/privatekey.pem', // the HTTPS private key
+      certificate: __dirname + '/certs/certificate.pem', // the HTTPS certificate
     },
 */
 

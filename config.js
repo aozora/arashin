@@ -50,6 +50,7 @@ fs.readdir(__dirname + '/sites', function (err, sites) {
       });
    });
 
+   console.dir(menu);
 });
 
 
@@ -63,6 +64,7 @@ fs.readdir(__dirname + '/sites', function (err, sites) {
       });
    });
 
+   console.dir(misc_params);
 });
 
 // Extend hbs with block to use private/public resourse for each view
@@ -119,6 +121,7 @@ hbs.registerHelper('translate', function (keyword, lang, site) {
    //output
    return target;
 });
+
 // Helper used to find available language for the sites
 hbs.registerHelper('availableLanguage', function (site) {
    // Read the language files available
@@ -189,8 +192,12 @@ Config.prototype.Application = function (app) {
 
       // Check if site exists, otherwise send error
       if (res.locals.mapping) {
+         utils.applog('info', 'Found mapped site for domain: ' + domain);
+
          // Set the view directory
          res.locals.view_dir = __dirname + '/sites/' + res.locals.mapping + '/views';
+         utils.applog('info', '   view_dir: ' + res.locals.view_dir);
+
          // Set favicon if is enabled in configuration parameters
          if (misc_params[res.locals.mapping].favicon) {
             app.use(express.favicon(__dirname + '/sites/' + res.locals.mapping + misc_params[res.locals.mapping].favicon));
@@ -207,8 +214,11 @@ Config.prototype.Application = function (app) {
    app.use(function (req, res, next) {
       // Check if is set the maintenance mode in params.js
       if (misc_params[res.locals.mapping].maintenance) {
+         utils.applog('warning', 'Maintenance mode ON');
+
          // Check if the remote ip is an allowed ip
          if (misc_params[res.locals.mapping].maintenance_allowed[req.connection.remoteAddress]) {
+            utils.applog('warning', '   IP ' + req.connection.remoteAddress + ' allowed!');
             next();
          } else {
             res.send(misc_params[res.locals.mapping].maintenance_message);
@@ -229,17 +239,18 @@ Config.prototype.Application = function (app) {
    // Set cookie
    app.use(express.cookieParser(parameters.cookie_secret));
 
-   app.use(express.session({
-      cookie: {maxAge: 24 * 60 * 60 * 1000},
-      // SET THE DB PARAMS TO SHARE SESSION ON SAME DATABASE
-      store: new RedisStore({
-         host: parameters.redis_host,
-         port: parameters.redis_port
-      })
-   })
-   );
+   app.use(express.session(
+      {
+         cookie: {maxAge: 24 * 60 * 60 * 1000},
+         // SET THE DB PARAMS TO SHARE SESSION ON SAME DATABASE
+         store: new RedisStore({
+            host: parameters.redis_host,
+            port: parameters.redis_port
+         })
+      }
+   ));
 
-
+   app.use(express.logger(':method :url :status'));
    app.use(express.compress());
    app.use(express.methodOverride());
    app.use(express.bodyParser());
@@ -265,10 +276,13 @@ Config.prototype.Application = function (app) {
       // Set guest role
       if (!req.session.role) {
          req.session.role = 1000;
+         utils.applog('warn', 'Set guest role 1000');
       }
+
       res.locals.title = misc_params[res.locals.mapping].title;
       res.locals.site_url = misc_params[res.locals.mapping].site_url;
       res.locals.session = req.session;
+
       // This is used for flash messages on redirect, set the session variable, and if is set pass to locals
       if (req.session.flashMessage) {
          res.locals.message = req.session.flashMessage;
@@ -281,10 +295,29 @@ Config.prototype.Application = function (app) {
 
    app.use(app.router);
 
-   // Set error view if env is development
-   if ('development' == process.env.NODE_ENV) {
+//   // Set error view if env is development
+//   if ('development' == process.env.NODE_ENV) {
+//      app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+//   }
+   // Show all errors and keep search engines out using robots.txt
+   app.configure('development', function(){
+      app.use(express.errorHandler({
+          'dumpExceptions': true
+         ,'showStack': true
+      }));
+      app.all('/robots.txt', function(req,res) {
+         res.send('User-agent: *\nDisallow: /', {'Content-Type': 'text/plain'});
+      });
+   });
+
+   // Suppress errors, allow all search engines
+   app.configure('production', function(){
       app.use(express.errorHandler());
-   }
+      app.all('/robots.txt', function(req,res) {
+         res.send('User-agent: *', {'Content-Type': 'text/plain'});
+      });
+   });
+
 
    // Set the error page if resource isn't found
    app.use(function (req, res) {

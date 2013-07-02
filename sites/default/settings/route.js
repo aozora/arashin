@@ -10,6 +10,9 @@
 module.exports = {
 
     routing_acl: [ // Set the acl for single route
+       {route: '/settings', acl: {0: true}},
+       {route: '/theme', acl: {0: true}},
+       {route: '/logout', acl: {0: true, 1: true}},
 /*      Example:
         {route: '/logout', acl: {0: true, 1: true}},
         // Put in route the same route defined in express.js, for example, a route with params:
