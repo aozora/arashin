@@ -288,16 +288,16 @@ Config.prototype.Application = function (app) {
    app.use(app.router);
 
 
-//   // Set static private file directory, use dedicated mounted path /static/private
-//   app.use('/static/private', function (req, res, next) {
-//      // check athentication
-//      if (req.session.user) {
-//         express.static(__dirname + '/private')(req, res, next);
-//      } else {
-//         utils.applog('error', 'Request invalid file from not authorized address: ' + req.connection.remoteAddress);
-//         next();
-//      }
-//   });
+   // Set static private file directory, use dedicated mounted path /static/private
+   app.use('/static/private', function (req, res, next) {
+      // check athentication
+      if (req.session.user) {
+         express.static(__dirname + '/private')(req, res, next);
+      } else {
+         utils.applog('error', 'Request invalid file from not authorized address: ' + req.connection.remoteAddress);
+         next();
+      }
+   });
 
    // Set static public file directory, use dedicated mounted path /static/public
    app.use('/static/public', express.static(__dirname + '/public'));
@@ -306,45 +306,45 @@ Config.prototype.Application = function (app) {
 
 //   // Set error view if env is development
 //   if ('development' == process.env.NODE_ENV) {
-      app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+//      app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 //   }
    // Show all errors and keep search engines out using robots.txt
-//   app.configure('development', function(){
-//      app.use(express.errorHandler({
-//          'dumpExceptions': true
-//         ,'showStack': true
-//      }));
-//      app.all('/robots.txt', function(req,res) {
-//         res.send('User-agent: *\nDisallow: /', {'Content-Type': 'text/plain'});
-//      });
-//   });
-//
-//   // Suppress errors, allow all search engines
-//   app.configure('production', function(){
-//      app.use(express.errorHandler());
-//      app.all('/robots.txt', function(req,res) {
-//         res.send('User-agent: *', {'Content-Type': 'text/plain'});
-//      });
-//   });
+   app.configure('development', function(){
+      app.use(express.errorHandler({
+          'dumpExceptions': true
+         ,'showStack': true
+      }));
+      app.all('/robots.txt', function(req,res) {
+         res.send('User-agent: *\nDisallow: /', {'Content-Type': 'text/plain'});
+      });
+   });
+
+   // Suppress errors, allow all search engines
+   app.configure('production', function(){
+      app.use(express.errorHandler());
+      app.all('/robots.txt', function(req,res) {
+         res.send('User-agent: *', {'Content-Type': 'text/plain'});
+      });
+   });
 
 
-//   // Set the error page if resource isn't found
-//   app.use(function (req, res) {
-//      utils.applog('error', 'Application page not found ' + req.url);
-//      res.render('40x');
-//   });
-//
-//   // Set page for application errors
-//   app.use(function (err, req, res, next) {
-//      // if an error occurs Connect will pass it down
-//      // through these "error-handling" middleware
-//      // allowing you to respond however you like
-//      utils.applog('error', 'Application error: ' + err);
-//      res.render('50x');
-//   });
+   // Set the error page if resource isn't found
+   app.use(function (req, res) {
+      utils.applog('error', 'Application page not found ' + req.url);
+      res.render('40x');
+   });
 
+   // Set page for application errors
+   app.use(function (err, req, res, next) {
+      // if an error occurs Connect will pass it down
+      // through these "error-handling" middleware
+      // allowing you to respond however you like
+      utils.applog('error', 'Application error: ' + err);
+      res.render('50x');
+   });
 
 };
+
 
 // DEFINE SOCKET.IO CONFIGURATION
 Config.prototype.SocketIO = function (io) {
