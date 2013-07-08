@@ -102,15 +102,15 @@ utils.applog('info', 'CPUs #' + numCPUs);
    configuration.Application(app);
 
    // get all controller as a module (all function is route)
-//   fs.readdir(__dirname + '/controller', function (err, files) {
-//      files.forEach(function (item) {
-//         require('./controller/' + item).route(app);
-//         utils.applog('info', 'Registered controller ' + item) ;
-//         console.log('Registered controller ' + item) ;
-//      });
-//   });
-require('./controller/misc.js').route(app);
-utils.applog('info', 'Registered controller misc.js') ;
+   fs.readdir(__dirname + '/controller', function (err, files) {
+      files.forEach(function (item) {
+         require('./controller/' + item).route(app);
+         utils.applog('info', 'Registered controller ' + item) ;
+         console.log('Registered controller ' + item) ;
+      });
+   });
+//require('./controller/misc.js').route(app);
+//utils.applog('info', 'Registered controller misc.js') ;
 
 
    // Define server variable
