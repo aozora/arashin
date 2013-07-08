@@ -16,7 +16,6 @@
       "nodemailer":"*",
       "handlebars":"*",
       "winston":"*",
-      "drex":"*",
       "knox":"*"
 	},
 	"optionalDependencies": {

@@ -34,79 +34,84 @@ utils.applog('info', 'CPUs #' + numCPUs);
 
 // If app.js goes down, app works thanks to workers
 // if all workers go down and app.js is up, the app doesn't work
-if (cluster.isMaster) {
-
-//   // Fork workers.
-//   for (var i = 0; i < numCPUs; i++) {
-//      cluster.fork();
+//if (cluster.isMaster) {
+//
+////   // Fork workers.
+////   for (var i = 0; i < numCPUs; i++) {
+////      cluster.fork();
+////   }
+////
+////   cluster.on('exit', function (worker) {
+////      utils.applog('warn', 'Worker ' + worker.pid + ' died. Restart...');
+////      // refork the process if one death
+////      cluster.fork();
+////   });
+//
+//   // Helper to fork a new instance
+//   function WorkerFork() {
+//      var worker = cluster.fork();
+//      worker.on('message', function(msg) {
+//         utils.applog('info', '[>] ' + id + ' | New message :: ' + msg);
+//      });
 //   }
 //
-//   cluster.on('exit', function (worker) {
-//      utils.applog('warn', 'Worker ' + worker.pid + ' died. Restart...');
-//      // refork the process if one death
-//      cluster.fork();
+//   // Fork workers.
+//   for (var i = 0; i < numCPUs; i++) {
+//      setTimeout(function() {
+//         WorkerFork() ;
+//      }, i*30000);
+//   }
+//
+//   // On exit, restart worker
+//   cluster.on('exit', function(worker, code, signal) {
+//      var exitCode = worker.process.exitCode;
+//      utils.applog('warn', '[*] ' + worker.id + ' | worker died : ' + worker.process.pid + ' (' + exitCode + ').');
+//      if ( !cluster.isExiting ) {
+//         utils.applog('warn', '[>] ' + worker.id + ' | worker restarting...');
+//         setTimeout(function() {
+//            WorkerFork();
+//         }, 500)
+//      }
 //   });
-
-   // Helper to fork a new instance
-   function WorkerFork() {
-      var worker = cluster.fork();
-      worker.on('message', function(msg) {
-         utils.applog('info', '[>] ' + id + ' | New message :: ' + msg);
-      });
-   }
-
-   // Fork workers.
-   for (var i = 0; i < numCPUs; i++) {
-      setTimeout(function() {
-         WorkerFork() ;
-      }, i*30000);
-   }
-
-   // On exit, restart worker
-   cluster.on('exit', function(worker, code, signal) {
-      var exitCode = worker.process.exitCode;
-      utils.applog('warn', '[*] ' + worker.id + ' | worker died : ' + worker.process.pid + ' (' + exitCode + ').');
-      if ( !cluster.isExiting ) {
-         utils.applog('warn', '[>] ' + worker.id + ' | worker restarting...');
-         setTimeout(function() {
-            WorkerFork();
-         }, 500)
-      }
-   });
-
-   // Message when worker is lonline
-   cluster.on('online', function(worker) {
-      utils.applog('info', '[>] ' + worker.id + ' | worker responded after it was forked');
-      worker.send('Hello you !');
-   });
-
-   ///////////////////////////////////////////////////////////// PROTECT EXIT /////////////
-   // Start reading from stdin so we don't exit.
-   process.stdin.resume();
-   process.on('SIGINT', function () {
-      cluster.isExiting = true ;
-      async.series({
-         foo: function(callback) {
-            callback(null, true)
-         }
-      }, function() {
-         utils.applog('info', '[*] Exit as a gentleman !') ;
-         process.exit(0);
-      })
-   });
-
-
-} else {
+//
+//   // Message when worker is lonline
+//   cluster.on('online', function(worker) {
+//      utils.applog('info', '[>] ' + worker.id + ' | worker responded after it was forked');
+//      worker.send('Hello you !');
+//   });
+//
+//   ///////////////////////////////////////////////////////////// PROTECT EXIT /////////////
+//   // Start reading from stdin so we don't exit.
+//   process.stdin.resume();
+//   process.on('SIGINT', function () {
+//      cluster.isExiting = true ;
+//      async.series({
+//         foo: function(callback) {
+//            callback(null, true)
+//         }
+//      }, function() {
+//         utils.applog('info', '[*] Exit as a gentleman !') ;
+//         process.exit(0);
+//      })
+//   });
+//
+//
+//} else {
 
    // Instance the application
    configuration.Application(app);
 
    // get all controller as a module (all function is route)
-   fs.readdir(__dirname + '/controller', function (err, files) {
-      files.forEach(function (item) {
-         require('./controller/' + item).route(app);
-      });
-   });
+//   fs.readdir(__dirname + '/controller', function (err, files) {
+//      files.forEach(function (item) {
+//         require('./controller/' + item).route(app);
+//         utils.applog('info', 'Registered controller ' + item) ;
+//         console.log('Registered controller ' + item) ;
+//      });
+//   });
+require('./controller/misc.js').route(app);
+utils.applog('info', 'Registered controller misc.js') ;
+
 
    // Define server variable
    var server;
@@ -128,7 +133,7 @@ if (cluster.isMaster) {
 
    } else {
 
-      var server = require('http').createServer(app)
+      var server = require('http').createServer(app);
       // Else start listening in http
 //      server.listen(parameters.client_port, parameters.client_host);
       server.listen(parameters.client_port /*, parameters.client_host*/);
@@ -150,4 +155,4 @@ if (cluster.isMaster) {
       require('./realtime').realtime(io);
    }
 
-}
+//}
