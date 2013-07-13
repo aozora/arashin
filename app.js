@@ -135,8 +135,8 @@ utils.applog('info', 'CPUs #' + numCPUs);
 
       var server = require('http').createServer(app);
       // Else start listening in http
-//      server.listen(parameters.client_port, parameters.client_host);
-      server.listen(parameters.client_port /*, parameters.client_host*/);
+      server.listen(parameters.client_port, parameters.client_host);
+//      server.listen(parameters.client_port /*, parameters.client_host*/);
       utils.applog('info', 'started web server, listening ' + parameters.client_host + ':' + parameters.client_port);
       console.log('started web server, listening ' + parameters.client_host + ':' + parameters.client_port)
    }

@@ -1,1 +1,13 @@
-<center>{{translate "error50x" session.language mapping}}</center>
+<div class="text-center">{{translate "error50x" session.language mapping}}</div>
+
+{{#if data}}
+   <h1>{{data.status}}</h1>
+   {{#if message}}
+      <div class="error">
+         <pre id="message">{{message}}</pre>
+         {{#if dev}}
+         <pre>{{data.stack}}</pre>
+         {{/if}}
+      </div>
+   {{/if}}
+{{/if}}

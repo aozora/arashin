@@ -285,6 +285,13 @@ Config.prototype.Application = function (app) {
       next();
    });
 
+
+   // "app.router" positions our routes
+   // above the middleware defined below,
+   // this means that Express will attempt
+   // to match & call routes _before_ continuing
+   // on, at which point we assume it's a 404 because
+   // no route has handled the request.
    app.use(app.router);
 
 
@@ -328,21 +335,91 @@ Config.prototype.Application = function (app) {
    });
 
 
+
+   // Since this is the last non-error-handling
+   // middleware use()d, we assume 404, as nothing else
+   // responded.
+
    // Set the error page if resource isn't found
    app.use(function (req, res) {
       utils.applog('error', 'Application page not found ' + req.url);
-      res.render('40x');
+
+      // respond with html page
+      if (req.accepts('html')) {
+         res.render('404', { url: req.url });
+         return;
+      }
+
+      // respond with json
+      if (req.accepts('json')) {
+         res.send({ error: 'Not found' });
+         return;
+      }
+
+      // default to plain-text. send()
+      res.type('txt').send('Not found');
    });
 
-   // Set page for application errors
-   app.use(function (err, req, res, next) {
-      // if an error occurs Connect will pass it down
-      // through these "error-handling" middleware
-      // allowing you to respond however you like
-      utils.applog('error', 'Application error: ' + err);
-      res.render('50x');
-   });
+//   // Set page for application errors
+//   app.use(function (err, req, res, next) {
+//      // if an error occurs Connect will pass it down
+//      // through these "error-handling" middleware
+//      // allowing you to respond however you like
+//      utils.applog('error', 'Application error: ' + err);
+//      res.render('50x');
+//   });
 
+
+   // error-handling middleware, take the same form
+   // as regular middleware, however they require an
+   // arity of 4, aka the signature (err, req, res, next).
+   // when connect has an error, it will invoke ONLY error-handling
+   // middleware.
+
+   // If we were to next() here any remaining non-error-handling
+   // middleware would then be executed, or if we next(err) to
+   // continue passing the error, only error-handling middleware
+   // would remain being executed, however here
+   // we simply respond with an error page.
+
+   app.use(function(err, req, res, next) {
+     // we may use properties of the error object
+     // here and next(err) appropriately, or if
+     // we possibly recovered from the error, simply next().
+     res.status(err.status || (err.status = 500));
+
+     console.error('Server error catch-all says: ', err);
+
+     // prevent users from seeing specific error messages in production
+     if (app.get('env') !== 'development') {
+       var newErr = new Error('Something went wrong. Sorry!');
+       newErr.status = err.status;
+       err = newErr;
+     }
+
+     // respond with json
+     if (req.accepts('json')) {
+       res.send({
+         data: err,
+         message: err.message
+       });
+
+       return;
+     }
+
+     if (req.accepts('html')) {
+       res.render('errors', {
+         dev: app.get('env') === 'development',
+         data: err,
+         message: err.message
+       });
+
+       return;
+     }
+
+     // default to plain-text. send()
+     res.type('txt').send('Error ' + err.status);
+   });
 };
 
 
