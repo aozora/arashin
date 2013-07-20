@@ -16,7 +16,6 @@ var fs = require('fs');
  * 	Get as parameter the application instanced in app.js
  * 
  */
-
 function route(app) {
 
    console.log('misc.js');

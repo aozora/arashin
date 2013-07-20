@@ -9,7 +9,7 @@
 
 // REQUIREMENTS
 var express = require('express');
-var expressValidator = require('express-validator');
+//var expressValidator = require('express-validator');
 var RedisStore = require('connect-redis')(express);
 var utils = require('./lib/utils');
 var hbs = require('./lib/hbs');
@@ -19,6 +19,7 @@ var path = require('path');
 var drex = require('./lib/drex');
 // Require parameters class and instance it
 var parameters = require('./params');
+var orm = require('./lib/juggling');
 
 // Read the locales json and create locales
 var locales = {};
@@ -172,6 +173,12 @@ var Config = function () {
 
 // EXPORT EXPRESS CONFIGURATION SETTINGS
 Config.prototype.Application = function (app) {
+
+   // configure juggling-db for Redis
+   orm.setup(parameters);
+
+
+
 
    // Remove Express information from the response header
    app.use(function (req, res, next) {

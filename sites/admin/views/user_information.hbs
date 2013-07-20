@@ -1,0 +1,55 @@
+{{! View user information }}
+
+
+<div class="row">
+    <div class="span3"></div>
+    
+    <div class="span6">
+	{{#checkRole session.role "0,"}}
+	<a href="/user/create" class="btn"><i class="icon-pencil"></i>New User</a> Find an user ....<br>
+	{{/checkRole}}
+{{#each data}}
+    <div class="row">
+        <div class="span3">{{name}}
+        
+	{{! In the if we must get the variable out of the each scope }}
+	{{#checkRole ../session.role "0,"}}
+        <a href="/user/delete/{{_id}}" role="btn"><i class="icon-trash"></i></a> 
+
+	{{/checkRole}}
+        {{#if ../session.connected}}
+	<a href="/user/edit/{{_id}}" role="btn"><i class="icon-edit"></i></a>
+        {{/if}}
+        </div>
+	{{#checkRole ../session.role "0,"}}
+            <div class="span2">{{_id}}</div>
+	{{/checkRole}}
+    </div>
+    <div class="row">
+        <div class="span6">{{email}}</div>
+    </div>
+{{/each}}
+</div>
+    <div class="span3"></div>
+</div> 
+
+{{! Add the user follow}}
+    {{#if follow}}
+    <div class="container">
+        <center>You follow # <a href="/follow/remove/friends/{{session.userslug}}" class="btn btn-success">Don't follow!</a></center><br>
+    </div>
+    {{else}}
+    <div class="container">
+        <center><a href="/follow/add/friends/{{session.userslug}}" class="btn btn-success">Follow tag!</a></center><br>
+    </div>
+    {{/if}}
+    <br> Followed:<br>
+                        {{#if data.followed}}
+                            {{#each data.followed}}
+                                    {{this}} -
+                                    <a href="/follow/remove/friends/{{this}}">Remove</a>
+                                    <br>
+                            {{/each}}
+                        {{else}}
+                            Nothing
+                        {{/if}}

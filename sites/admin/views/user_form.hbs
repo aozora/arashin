@@ -1,0 +1,29 @@
+{{! Form to create or update user information }}
+{{! type is passed as rendering attribute to choose update or create }}
+
+<div class="row">
+    <div class="span3"></div>
+    <div class="span6">
+        <form method="POST" action="/user/{{type}}" enctype='multipart/form-data'>
+                {{#seeType}}
+                     <input type="text" name="email" value="{{data.email}}" class="span6" placeholder="Email" />
+                     <input type="text" name="name" value="{{data.name}}" class="span6" placeholder="Name" />
+                    
+                {{else}}
+                    <span class="span6 uneditable-input">{{data.email}}</span>
+                    <input type="hidden" name="email" value="{{data.email}}" /><br>
+                    <span class="span6 uneditable-input">{{data.name}}</span><br>
+                    <input type="hidden" name="name" value="{{data.name}}" />
+                {{/seeType}}
+
+                               
+                {{! TODO: Check if the reinsert of the password is a good choose }}
+                 <input type="password" name="password" class="span6" placeholder="Password" />
+                {{#if session.admin}}                  
+                    <input type="text" name="role" value="{{data.role}}" class="span6" placeholder="Role" />
+                {{/if}}
+                <p><input type="submit" class="btn btn-block" value="{{translate "send" session.language mapping}}"></p>
+        </form>
+    </div>
+    <div class="span3"></div>
+</div>  
