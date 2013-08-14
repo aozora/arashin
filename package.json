@@ -1,10 +1,10 @@
 {
-	"name":"mucontent",
-	"description":"MuContent - Based on ExpressJs for create multisite, multilanguage and modular web application with Node.Js",
+	"name":"arashin",
+	"description":"Arashi for NodeJs",
   	"version":"1.0.0",
   	"author": {
-   		"name": "Andrea Di Mario",
-   		"email": "anddimario@gmail.com"
+   		"name": "Marcello Palmitessa",
+   		"email": ""
   	},
   	"dependencies": {
       "express":"3.x",
