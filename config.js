@@ -19,7 +19,7 @@ var path = require('path');
 var drex = require('./lib/drex');
 // Require parameters class and instance it
 var parameters = require('./params');
-var orm = require('./lib/juggling');
+var orm = require('./lib/db');
 
 // Read the locales json and create locales
 var locales = {};
