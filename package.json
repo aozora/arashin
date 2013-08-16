@@ -1,11 +1,19 @@
 {
 	"name":"arashin",
+   "subdomain": "aozoralabs.arashin",
 	"description":"Arashi for NodeJs",
   	"version":"1.0.0",
   	"author": {
    		"name": "Marcello Palmitessa",
    		"email": ""
   	},
+   "private": true,
+   "engines": {
+      "node": "0.10.x"
+   },
+   "scripts": {
+      "start": "app.js"
+   },
   	"dependencies": {
       "express":"3.x",
       "redis":"*",
@@ -21,13 +29,16 @@
       "knox":"*",
       "sanitizer": "0.0.15",
       "node-polyglot": ">= 0.2.1",
-      "lodash": "*"
-   },
-	"optionalDependencies": {
-		"socket.io":"*"
-	}, 
+      "lodash": "*",
+		"socket.io":"*",
+      "passport" : "*"
+	},
  	"devDependencies": {
    		"mocha":"*",
    		"request":"*"
-  	}
+  	},
+   "domains": [
+      "www.marcellop.com",
+      "marcellop.com"
+   ]
 }
