@@ -11,8 +11,8 @@
                   <p>This email is taken</p>
                </div>
 
-               <input placeholder="E-mail" class="input-block-level" id="email" type="text" name="email" value="{{email}}">
-               <input placeholder="Password" class="input-block-level" id="password" type="password" name="password">
+               <input placeholder="E-mail" class="input-block-level" id="email" type="text" name="email" value="{{email}}"/>
+               <input placeholder="Password" class="input-block-level" id="password" type="password" name="password"/>
                <a class="pull-right" href="#">Forgot password?</a>
                <label class="checkbox">
                   <input name="remember" type="checkbox" value="Remember Me"> Remember Me
@@ -28,43 +28,3 @@
    </div>
 </div>
 
-
-<script id="register-form">
-   <form accept-charset="utf-8" style="margin:0;" method="POST">
-      <fieldset>
-         <legend>Please Register</legend>
-         <input placeholder="Name" class="input-block-level" id="email" type="text" name="name">
-         <input placeholder="E-mail" class="input-block-level" id="email" type="text" name="email">
-         <input placeholder="Password" class="input-block-level" id="password" type="password" name="password">
-         <input placeholder="Confirm Password" class="input-block-level" id="password" type="password" name="password_confirm">
-            <p class="clearfix"><a class="pull-right flipme" href="#">Already have an account?</a></p>
-         <input class="btn btn-large btn-info btn-block" type="submit" value="Register">
-      </fieldset>
-   </form>
-</script>
-
-{{!
-<div class="row">
-   <div class="span3"></div>
-   <div class="span6">
-       <form method="POST" action="/admin/login">
-           <div class="control-group">
-               <div class="controls">
-                   <input type="text" name="email" value="{{email}}" class="span6" placeholder="Email" />
-</div>
-</div>
-<div class="control-group">
-   <div class="controls">
-      <input type="password" name="password" class="span6" placeholder="Password"/>
-   </div>
-</div>
-<div class="control-group">
-   <div class="controls">
-      <p><input type="submit" class="btn btn-block" value="{{translate "signin" session.language mapping}}"></p>
-   </div>
-</div>
-</form>
-</div>
-<div class="span3"></div>
-</div>
-}}
