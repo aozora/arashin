@@ -20,6 +20,10 @@ var drex = require('./lib/drex');
 // Require parameters class and instance it
 var parameters = require('./params');
 var orm;
+var admin_root = path.join(__dirname, '/admin');
+var admin_view_dir = path.join(__dirname, '/admin/views');
+
+
 
 // Read the locales json and create locales
 var locales = {};
@@ -254,13 +258,43 @@ Config.prototype.Application = function (app) {
       }
    });
 
+
+
+   // ********************************************************************
+   //
+   // EXPRESSJS CONFIGURATION
+   //
+   // ********************************************************************
+
    // Set view, define the personal engine first
    app.engine('hbs', hbs.__express);
    app.set('view engine', 'hbs');
 
-   // set view path for the current site
+   // set view path for the current site, or set it for admin pages
    app.use(function (req, res, next) {
-      app.set('views', res.locals.view_dir);
+
+      if (req.url.indexOf('/admin') > -1){
+
+         // set views folder for admin
+         app.set('views', admin_view_dir);
+
+         // load admin locales
+         fs.readdir(__dirname + '/admin/locales', function (err, files) {
+            files.forEach(function (file) {
+               // Use drex library to dynamic reload the locales
+               drex.require(__dirname + '/admin/locales/' + file, function (data) {
+                  var lang = 'admin_' + file.split('.')[0];
+                  locales[lang] = data;
+                  utils.applog('info', 'loaded admin locales ' + __dirname + '/admin/locales/' + file);
+               });
+            });
+         });
+
+      } else {
+         app.set('views', res.locals.view_dir);
+      }
+
+
       next();
    });
 
@@ -270,6 +304,7 @@ Config.prototype.Application = function (app) {
    // Set cookie
    app.use(express.cookieParser(parameters.cookie_secret));
 
+   // setup Redis for Session storage
    app.use(express.session(
       {
          cookie: {maxAge: 24 * 60 * 60 * 1000},

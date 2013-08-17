@@ -19,7 +19,14 @@ function route(app) {
 
    // Set index route
    app.get('/admin', utils.accesslog, function (req, res) {
-      res.render('admin');
+      res.render('index');
+   });
+
+
+
+   // Set login route
+   app.get('/admin/login', utils.accesslog, function (req, res) {
+      res.render('login');
    });
 
 

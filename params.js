@@ -35,7 +35,6 @@ module.exports = {
    // Mapping the vhost and sites: domain -> site name references
    vhost:              {
       "localhost":         'default',
-      "admin.localhost":   'admin',
       "www.marcellop.com": 'pinco'
    },
 

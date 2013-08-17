@@ -1,0 +1,166 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+body {
+   padding-top: 60px;
+   padding-bottom: 40px;
+}
+
+#noty_text {
+   padding-left: 10px;
+}
+
+#login-form .alert {
+   padding: 8px 35px 8px 14px;
+   margin-bottom: 20px;
+   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+   background-color: #fcf8e3;
+   border: 1px solid #fbeed5;
+   -webkit-border-radius: 2px;
+   -moz-border-radius: 2px;
+   border-radius: 2px;
+}
+
+#login-form .alert,
+#login-form .alert h4 {
+   color: #c09853;
+}
+
+#login-form .alert h4 {
+   margin: 0;
+}
+
+#login-form .alert .close {
+   position: relative;
+   top: -2px;
+   right: -21px;
+   line-height: 20px;
+}
+
+#login-form .alert-success {
+   background-color: #89d582;
+   border-color: #87cf6f;
+   color: #2b5e2b;
+}
+
+#login-form .alert-success h4 {
+   color: #2b5e2b;
+}
+
+#login-form .alert-danger,
+#login-form .alert-error {
+   background-color: #ff9696;
+   border-color: #ff879b;
+   color: #aa3735;
+}
+
+#login-form .alert-danger h4,
+#login-form .alert-error h4 {
+   color: #aa3735;
+}
+
+#login-form .alert-info {
+   background-color: #d9edf7;
+   border-color: #bce8f1;
+   color: #3a87ad;
+}
+
+#login-form .alert-info h4 {
+   color: #3a87ad;
+}
+
+#login-form .btn {
+   border-radius: 0;
+}
+
+#login-form .btn {
+   background-image: linear-gradient(tobottom, #000, #e6e6e6);
+}
+
+.well {
+   min-height: 20px;
+   padding: 19px;
+   margin-bottom: 20px;
+   -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+           border-radius: 2px;
+   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+           box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+   /* Fallback for web browsers that don't support RGBa */
+   background: white transparent;
+   /* RGBa with 0.6 opacity */
+   background: rgba(255, 255, 255, 0.8);
+   /* For IE 8*/
+   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99FFFFFF, endColorstr=#99FFFFFF)";
+}
+
+.flippant {
+   transform: perspective(500px) rotateY(0deg);
+   -webkit-transform: perspective(500px) rotateY(0deg);
+   -moz-transform: perspective(500px) rotateY(0deg);
+   /*z-index: 200;*/
+}
+
+.flippant-back {
+   transform: perspective(500px) rotateY(-180deg);
+   -moz-transform: perspective(500px) rotateY(-180deg);
+   -webkit-transform: perspective(500px) rotateY(-180deg);
+   height: 0;
+   /*z-index: 200;*/
+}
+
+.flippant, .flippant-back {
+   transform-style: preserve-3d;
+   -webkit-transform-style: preserve-3d;
+   -moz-transform-style: preserve-3d;
+
+   backface-visibility: hidden;
+   -webkit-backface-visibility: hidden;
+   -moz-backface-visibility: hidden;
+}
+
+.flippant, .flipper {
+   -o-transition: all .2s ease-in-out;
+   -ms-transition: all .2s ease-in-out;
+   -moz-transition: all .2s ease-in-out;
+   -webkit-transition: all .2s ease-in-out;
+   transition: all .2s ease-in-out;
+}
+
+.flippant.flipped {
+   transform: perspective(500px) rotateY(180deg);
+   -moz-transform: perspective(500px) rotateY(180deg);
+   -webkit-transform: perspective(500px) rotateY(180deg);
+
+}
+
+.flippant-back.flipped {
+   transform: perspective(500px) rotateY(0deg);
+   -moz-transform: perspective(500px) rotateY(0deg);
+   -webkit-transform: perspective(500px) rotateY(0deg);
+}
+
+.flippant-modal-dark, .flippant-modal-light {
+   position: fixed;
+   margin: 0;
+   top: 2.5%;
+   left: 2.5%;
+   width: 95%;
+   height: 95%;
+   padding: 1em;
+   box-sizing: border-box;
+   background: rgba(0, 0, 0, 0.7);
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.flippant-modal-dark, .flippant-modal-dark p {
+   color: white;
+}
+
+.flippant-modal-light {
+   background: rgba(255, 255, 255, 0.7);
+   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+   border-radius: 5px;
+}
