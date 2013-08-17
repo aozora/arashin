@@ -19,11 +19,11 @@
    <link href="/static/public/css/bootstrap-responsive.css" rel="stylesheet">
    <link href="/static/public/css/font-awesome.min.css" rel="stylesheet">
    <link href="/static/public/css/flat-ui.css" rel="stylesheet">
-   <link href="/static/public/css/style.css" rel="stylesheet">
+   <link href="/static/public/css/admin/admin.css" rel="stylesheet">
 
    <link rel="shortcut icon" href="/static/public/img/favicon.ico">
 
-   <script src="/static/public/js/vendor/modernizr-2.6.2.min.js"></script>
+   <script src="/static/public/js/modernizr-2.6.2.min.js"></script>
 
 </head>
 <body>
@@ -31,33 +31,73 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
    <![endif]-->
 
-   <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-         <div class="container-fluid">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>
-            </a>
-            <a class="brand" href="/">{{title}}</a>
+   <!--<div class="navbar navbar-fixed-top">-->
+      <!--<div class="navbar-inner">-->
+         <!--<div class="container-fluid">-->
+            <!--<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">-->
+               <!--<span class="icon-bar"></span>-->
+               <!--<span class="icon-bar"></span>-->
+               <!--<span class="icon-bar"></span>-->
+            <!--</a>-->
+            <!--<a class="brand" href="/">{{title}}</a>-->
 
-            <div class="nav-collapse collapse">
-               <ul class="nav">
-                  {{{ createMenu session.language session.role mapping}}}
-               </ul>
-               <div class='nav pull-right'>
-                  {{! ISSUE ON IPHONE: https://github.com/twitter/bootstrap/issues/4756 }}
-                  <li class='dropdown'><a href='#' class='dropdown-toggle' data-toggle='dropdown' data-target='#'>{{translate "language" session.language mapping}} <b class='caret'></b></a>
-                     <ul class='dropdown-menu'>
-                        {{{availableLanguage mapping}}}
-                     </ul>
-                  </li>
-               </div>
-            </div>
-            <!--/.nav-collapse -->
-         </div>
-      </div>
+            <!--<div class="nav-collapse collapse">-->
+               <!--<ul class="nav">-->
+                  <!--{{{ createMenu session.language session.role mapping}}}-->
+               <!--</ul>-->
+               <!--<div class='nav pull-right'>-->
+                  <!--{{! ISSUE ON IPHONE: https://github.com/twitter/bootstrap/issues/4756 }}-->
+                  <!--<li class='dropdown'><a href='#' class='dropdown-toggle' data-toggle='dropdown' data-target='#'>{{translate "language" session.language mapping}} <b class='caret'></b></a>-->
+                     <!--<ul class='dropdown-menu'>-->
+                        <!--{{{availableLanguage mapping}}}-->
+                     <!--</ul>-->
+                  <!--</li>-->
+               <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;/.nav-collapse &ndash;&gt;-->
+         <!--</div>-->
+      <!--</div>-->
+   <!--</div>-->
+
+   <div class="container">
+      <ul id="gn-menu" class="gn-menu-main">
+         <li class="gn-trigger">
+            <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+            <nav class="gn-menu-wrapper">
+               <div class="gn-scroller">
+                  <ul class="gn-menu">
+                     <li class="gn-search-item">
+                        <input placeholder="Search" type="search" class="gn-search">
+                        <!--<a class="gn-icon gn-icon-search"><span>Search</span></a>-->
+                        <a class="gn-icon gn-icon-search"><span>Search</span></a>
+                     </li>
+                     <li>
+                        <a class="gn-icon gn-icon-download">Downloads</a>
+                        <ul class="gn-submenu">
+                           <li><a class="gn-icon gn-icon-illustrator">Vector Illustrations</a></li>
+                           <li><a class="gn-icon gn-icon-photoshop">Photoshop files</a></li>
+                        </ul>
+                     </li>
+                     <li><a class="gn-icon gn-icon-cog">Settings</a></li>
+                     <li><a class="gn-icon gn-icon-help">Help</a></li>
+                     <li>
+                        <a class="gn-icon gn-icon-archive">Archives</a>
+                        <ul class="gn-submenu">
+                           <li><a class="gn-icon gn-icon-article">Articles</a></li>
+                           <li><a class="gn-icon gn-icon-pictures">Images</a></li>
+                           <li><a class="gn-icon gn-icon-videos">Videos</a></li>
+                        </ul>
+                     </li>
+                  </ul>
+               </div><!-- /gn-scroller -->
+            </nav>
+         </li>
+         <li><a href="http://tympanus.net/codrops">Codrops</a></li>
+         <li><a class="codrops-icon codrops-icon-prev" href="http://tympanus.net/Development/HeaderEffects/"><span>Previous Demo</span></a></li>
+         <li><a class="codrops-icon codrops-icon-drop" href="http://tympanus.net/codrops/?p=16030"><span>Back to the Codrops Article</span></a></li>
+      </ul>
    </div>
+
 
    <div class="container">
       {{! The message from the app for the user }}
@@ -72,8 +112,6 @@
             </div>
          </div>
       {{/if}}
-
-      <h1>DASHBOARD</h1>
 
       {{{body}}}
    </div>
@@ -96,6 +134,11 @@
    <script src="/static/public/js/flatui-radio.js"></script>
 
    <script src="/static/public/js/admin/admin.core.js"></script>
+   <!--<script src="/static/public/js/admin/admin.dashboard.js"></script>-->
+   <script src="/static/public/js/admin/gnmenu.js"></script>
+   <script>
+      new gnMenu( document.getElementById( 'gn-menu' ) );
+   </script>
 
 </body>
 </html>
