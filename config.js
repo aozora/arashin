@@ -19,25 +19,25 @@ var path = require('path');
 var drex = require('./lib/drex');
 // Require parameters class and instance it
 var parameters = require('./params');
-var orm = require('./lib/db');
+var orm;
 
 // Read the locales json and create locales
 var locales = {};
 fs.readdir(__dirname + '/sites', function (err, sites) {
    sites.forEach(function (site) {
-      fs.readdir(__dirname + '/sites/' + site + '/locales', function (err, files) {
-         files.forEach(function (file) {
-            // Use drex library to dynamic reload the locales
-            drex.require(__dirname + '/sites/' + site + '/locales/' + file, function (data) {
-               var lang = site + '_' + file.split('.')[0];
-               locales[lang] = data;
-               utils.applog('info', 'loaded locales ' + __dirname + '/sites/' + site + '/locales/' + file);
+      if (site != '.DS_Store' && site != '.svn' && site != '.git') {
+         fs.readdir(__dirname + '/sites/' + site + '/locales', function (err, files) {
+            files.forEach(function (file) {
+               // Use drex library to dynamic reload the locales
+               drex.require(__dirname + '/sites/' + site + '/locales/' + file, function (data) {
+                  var lang = site + '_' + file.split('.')[0];
+                  locales[lang] = data;
+                  utils.applog('info', 'loaded locales ' + __dirname + '/sites/' + site + '/locales/' + file);
+               });
             });
          });
-
-      });
+      }
    });
-
 });
 
 
@@ -45,26 +45,35 @@ fs.readdir(__dirname + '/sites', function (err, sites) {
 var menu = {};
 fs.readdir(__dirname + '/sites', function (err, sites) {
    sites.forEach(function (site) {
-      // Use drex library to dynamic reload the locales
-      drex.require(__dirname + '/sites/' + site + '/settings/menu.js', function (data) {
-         menu[site] = data;
-      });
+      if (site != '.DS_Store' && site != '.svn' && site != '.git') {
+         // Use drex library to dynamic reload the locales
+         drex.require(__dirname + '/sites/' + site + '/settings/menu.js', function (data) {
+            menu[site] = data;
+         });
+      }
    });
 });
 
 
-// Read the misc parameters json and create variable
+// Read the misc parameters json for each site and create variable
 var misc_params = {};
 fs.readdir(__dirname + '/sites', function (err, sites) {
    sites.forEach(function (site) {
-      // Use drex library to dynamic reload the locales
-      drex.require(__dirname + '/sites/' + site + '/settings/misc.js', function (data) {
-         misc_params[site] = data;
-      });
+      if (site != '.DS_Store' && site != '.svn' && site != '.git') {
+         // Use drex library to dynamic reload the locales
+         drex.require(__dirname + '/sites/' + site + '/settings/misc.js', function (data) {
+            misc_params[site] = data;
+         });
+      }
    });
 });
 
+
+// ********************************************************************
+//
 // Extend hbs with block to use private/public resourse for each view
+//
+// ********************************************************************
 var blocks = {};
 
 hbs.registerHelper('extend', function (name, context) {
@@ -75,6 +84,7 @@ hbs.registerHelper('extend', function (name, context) {
 
    block.push(context(this));
 });
+
 hbs.registerHelper('block', function (name) {
    var val = (blocks[name] || []).join('\n');
 
@@ -82,7 +92,6 @@ hbs.registerHelper('block', function (name) {
    blocks[name] = [];
    return val;
 });
-
 
 // HBS Helper for check role and permission and get back the content if user is allowed
 // Pass the allowed as a comma separated string like: 0,1,...
@@ -94,7 +103,7 @@ hbs.registerHelper('checkRole', function (role, allowed, options) {
    if (temp[role]) {
       return options.fn(this);
    } else {
-      return;
+      return null;
    }
 });
 
@@ -164,9 +173,16 @@ hbs.registerHelper('createMenu', function (lang, role, site) {
    return html;
 });
 
+//
+// ********************************************************************
 
 
+
+// ********************************************************************
+//
 // Define configuration class
+//
+// ********************************************************************
 var Config = function () {
 };
 
@@ -174,8 +190,10 @@ var Config = function () {
 // EXPORT EXPRESS CONFIGURATION SETTINGS
 Config.prototype.Application = function (app) {
 
+   utils.applog('info', 'parameters:\n' + parameters);
+
    // configure juggling-db for Redis
-   orm.setup(parameters);
+   orm = require('./lib/db').setup(parameters);
 
 
 
@@ -189,9 +207,11 @@ Config.prototype.Application = function (app) {
 
    // Middleware to get the host for multisite
    app.use(function (req, res, next) {
+
       // Get the request host and map it to right database into redis
       var domain = req.headers.host.split(':')[0];
-      // Set the parameters mapping
+
+      // Search if the vhost parameters has the requested host name
       res.locals.mapping = parameters.vhost[domain];
 
       // Check if site exists, otherwise send error
@@ -201,10 +221,12 @@ Config.prototype.Application = function (app) {
          // Set the view directory
          res.locals.view_dir = path.join(__dirname, '/sites', res.locals.mapping, '/views');
 
-         // Set favicon if is enabled in configuration parameters
-         if (misc_params[res.locals.mapping].favicon) {
-            app.use(express.favicon(path.join( __dirname, '/sites/', res.locals.mapping, misc_params[res.locals.mapping].favicon)));
-         }
+//         // Set favicon if is enabled in configuration parameters
+//         if (misc_params[res.locals.mapping].favicon) {
+//            var favicon_path = path.join( __dirname, '/sites/', res.locals.mapping, misc_params[res.locals.mapping].favicon);
+//            console.log('favicon_path = ' + favicon_path);
+//            app.use(express.favicon(favicon_path));
+//         }
 
          next();
 
@@ -353,7 +375,7 @@ Config.prototype.Application = function (app) {
 
       // respond with html page
       if (req.accepts('html')) {
-         res.render('404', { url: req.url });
+         res.render('40x', { url: req.url });
          return;
       }
 

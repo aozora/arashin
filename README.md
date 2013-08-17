@@ -1,7 +1,7 @@
-# MuContent
+# Arashin
 
 CMS based on ExpressJs for create multisite, multilanguage and modular web application with Node.Js         
-Google Group: http://groups.google.com/group/mucontent
+Originally based on the project MuContent
 
 Features (see module list too):
 - http/https configuration
@@ -45,15 +45,25 @@ On browser: `https://localhost:10443`
 After the application is running, you can run the application's tests (into document root, after dev dependencies install): `./node_modules/.bin/mocha --reporter spec`     
 You can change data for request and credentials for tests in ./test/test.js.
 
-# MODULES
+# SPECS
 
-- User: https://github.com/anddimario/mucontent-user
-- Social: https://github.com/anddimario/mucontent-social
-- Messages: https://github.com/anddimario/mucontent-messages
-- Objects: https://github.com/anddimario/mucontent-objects
-- Media: https://github.com/anddimario/mucontent-media
-- Theme: https://github.com/anddimario/mucontent-theme
-- Settings: https://github.com/anddimario/mucontent-settings
+Sites must be configured as follow:
+
+* in params.js, add a proper host name in the vhost array
+* in ./sites folder, copy the sites files in a folder named exactly as the site host name
+
+
+# Middlewares
+* utils.accesslog
+* utils.restricted      // Check user authentication: read {site}/settings/route.js
+* utils.already_auth    // Check req.session.user
+* utils.parseCookie     // Parse the cookie to get socket.io authentication handler
+* utils.sendmail
+
+
+# Utils
+* utils.applog(level, s) // levels: info, warn, error
+
 
 More information and documentation on wiki (work in progress).
    

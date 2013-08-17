@@ -104,13 +104,13 @@ utils.applog('info', 'CPUs #' + numCPUs);
    // get all controller as a module (all function is route)
    fs.readdir(__dirname + '/controller', function (err, files) {
       files.forEach(function (item) {
-         require('./controller/' + item).route(app);
-         utils.applog('info', 'Registered controller ' + item) ;
-         console.log('Registered controller ' + item) ;
+         if (item != '.DS_Store' && item != '.svn' && item != '.git') {
+            require('./controller/' + item).route(app);
+            utils.applog('info', 'Registered controller ' + item) ;
+            //console.log('Registered controller ' + item) ;
+         }
       });
    });
-//require('./controller/misc.js').route(app);
-//utils.applog('info', 'Registered controller misc.js') ;
 
 
    // Define server variable
