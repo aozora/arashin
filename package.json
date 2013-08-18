@@ -32,12 +32,13 @@
       "lodash": "*",
 		"socket.io":"*",
       "passport" : "*",
-      "aspa-express": "*",
-      "aspa" : "*"
+      "assetify": "*"
 	},
  	"devDependencies": {
-   		"mocha":"*",
-   		"request":"*"
+      "grunt": "~0.4.1",
+      "grunt-assetify": "*",
+      "mocha":"*",
+      "request":"*"
   	},
    "domains": [
       "www.marcellop.com",
