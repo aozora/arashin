@@ -76,11 +76,12 @@
 }
 
 .gn-menu-main a {
-		display: block;
-		height: 100%;
-		color: #5f6f81;
-		text-decoration: none;
-		cursor: pointer;
+   display: block;
+   height: 100%;
+   color: #5f6f81;
+   text-decoration: none;
+   cursor: pointer;
+   transition: none;
 }
 
 .no-touch .gn-menu-main a:hover,
@@ -250,29 +251,29 @@ input.gn-search:focus {
 }
 
 .gn-icon::before {
-		display: inline-block;
-		width: 60px;
-		text-align: center;
-		text-transform: none;
-		font-weight: normal;
-		font-style: normal;
-		font-variant: normal;
-		font-family: 'ecoicons';
-		line-height: 1;
-		speak: none;
-		-webkit-font-smoothing: antialiased;
+   display: inline-block;
+   width: 60px;
+   text-align: center;
+   text-transform: none;
+   font-weight: normal;
+   font-style: normal;
+   font-variant: normal;
+   font-family: FontAwesome;
+   line-height: 1;
+   speak: none;
+   -webkit-font-smoothing: antialiased;
 }
 
 .gn-icon-help::before {
-		content: "\e000"
+		content: "\f059"
 }
 
 .gn-icon-earth::before {
-		content: "\e004"
+		content: "\f0ac"
 }
 
 .gn-icon-cog::before {
-		content: "\e006"
+		content: "\f013"
 }
 
 .gn-icon-search::before {
@@ -280,31 +281,31 @@ input.gn-search:focus {
 }
 
 .gn-icon-download::before {
-		content: "\e007"
+		content: "\f0ed"
 }
 
 .gn-icon-photoshop::before {
-		content: "\e001"
+		content: "\f09b"
 }
 
 .gn-icon-illustrator::before {
-		content: "\e002"
+		content: "\f167"
 }
 
 .gn-icon-archive::before {
-		content: "\e00d"
+		content: "\f187"
 }
 
 .gn-icon-article::before {
-		content: "\e003"
+		content: "\f0f6"
 }
 
 .gn-icon-pictures::before {
-		content: "\e008"
+		content: "\f03e"
 }
 
 .gn-icon-videos::before {
-		content: "\e009"
+		content: "\f16a"
 }
 
 /* if an icon anchor has a span, hide the span */
