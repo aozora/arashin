@@ -1,5 +1,5 @@
 /*
- * MuContent
+ * Arashin
  * 
  * The configuration file, this class instance the Express settings 
  * and other application settings
@@ -17,9 +17,11 @@ var sessionStore = new RedisStore();
 var fs = require('fs');
 var path = require('path');
 var drex = require('./lib/drex');
+var aspa = require('aspa-express'); // assets manager
+var orm;
+
 // Require parameters class and instance it
 var parameters = require('./params');
-var orm;
 var admin_root = path.join(__dirname, '/admin');
 var admin_view_dir = path.join(__dirname, '/admin/views');
 
@@ -80,22 +82,23 @@ fs.readdir(__dirname + '/sites', function (err, sites) {
 // ********************************************************************
 var blocks = {};
 
-hbs.registerHelper('extend', function (name, context) {
+hbs.registerHelper('extend', function(name, context) {
    var block = blocks[name];
    if (!block) {
       block = blocks[name] = [];
    }
 
-   block.push(context(this));
+   block.push(context.fn(this)); // for older versions of handlebars, use block.push(context(this));
 });
 
-hbs.registerHelper('block', function (name) {
+hbs.registerHelper('block', function(name) {
    var val = (blocks[name] || []).join('\n');
 
    // clear the block
    blocks[name] = [];
    return val;
 });
+
 
 // HBS Helper for check role and permission and get back the content if user is allowed
 // Pass the allowed as a comma separated string like: 0,1,...
@@ -176,6 +179,16 @@ hbs.registerHelper('createMenu', function (lang, role, site) {
    });
    return html;
 });
+
+
+hbs.registerHelper('assetspath', function(){
+   // Add getAssetPath() method to app.locals, so you can use it in template files.
+   // I'm choosing to alias getAssetPath() to asset() here,
+   //   but you can use anything that makes sense to you.
+   var assets = aspa.getAssetPath;
+   return assets();
+});
+
 
 //
 // ********************************************************************
@@ -272,6 +285,12 @@ Config.prototype.Application = function (app) {
 
    // set view path for the current site, or set it for admin pages
    app.use(function (req, res, next) {
+
+      // Add getAssetPath() method to app.locals, so you can use it in template files.
+      // I'm choosing to alias getAssetPath() to asset() here,
+      //   but you can use anything that makes sense to you.
+      res.locals.assets = aspa.getAssetPath;
+
 
       if (req.url.indexOf('/admin') > -1){
 
@@ -396,6 +415,10 @@ Config.prototype.Application = function (app) {
       app.all('/robots.txt', function(req,res) {
          res.send('User-agent: *', {'Content-Type': 'text/plain'});
       });
+
+      // Add header-adjusting middleware in production mode.
+      app.use(aspa.adjustResponseHeaders());
+
    });
 
 

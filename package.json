@@ -31,7 +31,9 @@
       "node-polyglot": ">= 0.2.1",
       "lodash": "*",
 		"socket.io":"*",
-      "passport" : "*"
+      "passport" : "*",
+      "aspa-express": "*",
+      "aspa" : "*"
 	},
  	"devDependencies": {
    		"mocha":"*",
