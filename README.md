@@ -65,8 +65,16 @@ Sites must be configured as follow:
 * utils.applog(level, s) // levels: info, warn, error
 
 
-More information and documentation on wiki (work in progress).
-   
+# Helpers hbs
+* extend
+* block
+* checkRole
+* translate
+* availableLanguage
+* createMenu
+*
+
+
 ---------------------------------------
 
 LICENSE

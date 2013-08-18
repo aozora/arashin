@@ -12,19 +12,16 @@
    <meta name="description" content="">
    <meta name="author" content="">
 
-   {{! The Styles }}
-   {{! Use different public/private block for styles }}
-   {{{block "stylesheets"}}}
    <link href="/static/public/css/bootstrap.css" rel="stylesheet">
    <link href="/static/public/css/bootstrap-responsive.css" rel="stylesheet">
    <link href="/static/public/css/font-awesome.min.css" rel="stylesheet">
    <link href="/static/public/css/flat-ui.css" rel="stylesheet">
    <link href="/static/public/css/admin/admin.css" rel="stylesheet">
+   {{{block "stylesheets"}}}
 
    <link rel="shortcut icon" href="/static/public/img/favicon.ico">
 
    <script src="/static/public/js/modernizr-2.6.2.min.js"></script>
-
 </head>
 <body>
    <!--[if lt IE 7]>
@@ -92,9 +89,9 @@
                </div><!-- /gn-scroller -->
             </nav>
          </li>
-         <li><a href="http://tympanus.net/codrops">Codrops</a></li>
-         <li><a class="codrops-icon codrops-icon-prev" href="http://tympanus.net/Development/HeaderEffects/"><span>Previous Demo</span></a></li>
-         <li><a class="codrops-icon codrops-icon-drop" href="http://tympanus.net/codrops/?p=16030"><span>Back to the Codrops Article</span></a></li>
+         <li><a href="#">ArashiN</a></li>
+         <li><a class="codrops-icon codrops-icon-prev" href="#"><span>Dashboard</span></a></li>
+         <li><a class="codrops-icon codrops-icon-drop" href="#"><span>Log out</span></a></li>
       </ul>
    </div>
 
@@ -139,6 +136,7 @@
    <script>
       new gnMenu( document.getElementById( 'gn-menu' ) );
    </script>
+   {{{block "scripts"}}}
 
 </body>
 </html>
