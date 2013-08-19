@@ -9,7 +9,6 @@
 
 // REQUIREMENTS
 var express = require('express');
-//var expressValidator = require('express-validator');
 var RedisStore = require('connect-redis')(express);
 var utils = require('./lib/utils');
 var hbs = require('./lib/hbs');
@@ -17,7 +16,7 @@ var sessionStore = new RedisStore();
 var fs = require('fs');
 var path = require('path');
 var drex = require('./lib/drex');
-var aspa = require('aspa-express'); // assets manager
+var assetify = require('assetify').instance();
 var orm;
 
 // Require parameters class and instance it
@@ -181,11 +180,7 @@ hbs.registerHelper('createMenu', function (lang, role, site) {
 });
 
 
-hbs.registerHelper('assetspath', function(){
-   // Add getAssetPath() method to app.locals, so you can use it in template files.
-   // I'm choosing to alias getAssetPath() to asset() here,
-   //   but you can use anything that makes sense to you.
-   var assets = aspa.getAssetPath;
+hbs.registerHelper('assets_css_emit', function(profile){
    return assets();
 });
 
@@ -279,18 +274,15 @@ Config.prototype.Application = function (app) {
    //
    // ********************************************************************
 
+   assetify(app, express, __dirname + '/public/.bin');
+
+
    // Set view, define the personal engine first
    app.engine('hbs', hbs.__express);
    app.set('view engine', 'hbs');
 
    // set view path for the current site, or set it for admin pages
    app.use(function (req, res, next) {
-
-      // Add getAssetPath() method to app.locals, so you can use it in template files.
-      // I'm choosing to alias getAssetPath() to asset() here,
-      //   but you can use anything that makes sense to you.
-      res.locals.assets = aspa.getAssetPath;
-
 
       if (req.url.indexOf('/admin') > -1){
 
@@ -415,10 +407,6 @@ Config.prototype.Application = function (app) {
       app.all('/robots.txt', function(req,res) {
          res.send('User-agent: *', {'Content-Type': 'text/plain'});
       });
-
-      // Add header-adjusting middleware in production mode.
-      app.use(aspa.adjustResponseHeaders());
-
    });
 
 

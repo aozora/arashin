@@ -74,6 +74,9 @@ Sites must be configured as follow:
 * createMenu
 *
 
+https://github.com/donpark/hbs
+https://github.com/assemble/handlebars-helpers
+
 
 ---------------------------------------
 

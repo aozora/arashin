@@ -1,5 +1,5 @@
 /*
- * MuContent
+ * Arashin
  * 
  * Starting application with clustering for multicore CPUs
  * 
