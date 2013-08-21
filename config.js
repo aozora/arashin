@@ -181,12 +181,21 @@ hbs.registerHelper('createMenu', function (lang, role, site) {
 
 
 
-hbs.registerHelper('css_render', function(css) {
-   var html = css.renderTags();
+hbs.registerHelper('css_render', function(css, namespace) {
+   var html = css.renderTags(namespace);
 
    console.log('css_render: ' + html);
    return html;
 });
+
+
+hbs.registerHelper('js_render', function(js, namespace) {
+   var html = js.renderTags(namespace);
+
+   console.log('js_render: ' + html);
+   return html;
+});
+
 
 //
 // ********************************************************************
@@ -283,23 +292,12 @@ Config.prototype.Application = function (app) {
 
 
    // enable asset management
-   var clientjs = piler.createJSManager({ outputDirectory: __dirname + "/public/assets" });
-   var clientcss = piler.createCSSManager({ outputDirectory: __dirname + "/public/assets" });
+   var clientjs =    piler.createJSManager({  outputDirectory: __dirname + "/public/assets", urlRoot: "/assets/js/" });
+   var clientcss =   piler.createCSSManager({ outputDirectory: __dirname + "/public/assets", urlRoot: "/assets/css/" });
    clientjs.bind(app);
    clientcss.bind(app);
-//   js.addUrl("http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js");
-//
-//   js.addFile(__dirname + "/client/underscore.js");
-//   js.addFile(__dirname + "/client/backbone.js");
-//   js.addFile(__dirname + "/client/hello.js");
-//   js.addFile(__dirname + "/client/hello.coffee");
-//   js.addFile("foo", __dirname + "/client/foo.coffee");
-//   js.addFile("bar", __dirname + "/client/bar.coffee");
-   clientcss.addFile(__dirname + '/public/css/bootstrap.css');
-   clientcss.addFile(__dirname + '/public/css/bootstrap-responsive.css');
-   clientcss.addFile(__dirname + '/public/css/font-awesome.min.css');
-   clientcss.addFile(__dirname + '/public/css/flat-ui.css');
-   clientcss.addFile(__dirname + '/public/css/admin/admin.css');
+
+   var assets = require('./lib/assets').configure(clientjs, clientcss);
 
 
 
