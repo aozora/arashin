@@ -16,7 +16,7 @@ var sessionStore = new RedisStore();
 var fs = require('fs');
 var path = require('path');
 var drex = require('./lib/drex');
-var assetify = require('assetify').instance();
+var piler = require("piler");
 var orm;
 
 // Require parameters class and instance it
@@ -180,10 +180,13 @@ hbs.registerHelper('createMenu', function (lang, role, site) {
 });
 
 
-hbs.registerHelper('assets_css_emit', function(profile){
-   return assets();
-});
 
+hbs.registerHelper('css_render', function(css) {
+   var html = css.renderTags();
+
+   console.log('css_render: ' + html);
+   return html;
+});
 
 //
 // ********************************************************************
@@ -274,12 +277,31 @@ Config.prototype.Application = function (app) {
    //
    // ********************************************************************
 
-   assetify(app, express, __dirname + '/public/.bin');
-
-
    // Set view, define the personal engine first
    app.engine('hbs', hbs.__express);
    app.set('view engine', 'hbs');
+
+
+   // enable asset management
+   var clientjs = piler.createJSManager({ outputDirectory: __dirname + "/public/assets" });
+   var clientcss = piler.createCSSManager({ outputDirectory: __dirname + "/public/assets" });
+   clientjs.bind(app);
+   clientcss.bind(app);
+//   js.addUrl("http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js");
+//
+//   js.addFile(__dirname + "/client/underscore.js");
+//   js.addFile(__dirname + "/client/backbone.js");
+//   js.addFile(__dirname + "/client/hello.js");
+//   js.addFile(__dirname + "/client/hello.coffee");
+//   js.addFile("foo", __dirname + "/client/foo.coffee");
+//   js.addFile("bar", __dirname + "/client/bar.coffee");
+   clientcss.addFile(__dirname + '/public/css/bootstrap.css');
+   clientcss.addFile(__dirname + '/public/css/bootstrap-responsive.css');
+   clientcss.addFile(__dirname + '/public/css/font-awesome.min.css');
+   clientcss.addFile(__dirname + '/public/css/flat-ui.css');
+   clientcss.addFile(__dirname + '/public/css/admin/admin.css');
+
+
 
    // set view path for the current site, or set it for admin pages
    app.use(function (req, res, next) {
@@ -336,6 +358,11 @@ Config.prototype.Application = function (app) {
 
    // Set the default locals
    app.use(function (req, res, next) {
+
+      // set assets
+      res.locals.js = clientjs;
+      res.locals.css = clientcss;
+
       // Set guest role
       utils.applog('info', 'req.session.role = ' + req.session.role);
 

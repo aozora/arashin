@@ -32,11 +32,10 @@
       "lodash": "*",
 		"socket.io":"*",
       "passport" : "*",
-      "assetify": "*"
+      "piler": "*"
 	},
  	"devDependencies": {
       "grunt": "~0.4.1",
-      "grunt-assetify": "*",
       "mocha":"*",
       "request":"*"
   	},
