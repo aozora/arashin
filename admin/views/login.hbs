@@ -1,30 +1,59 @@
+<div class="row">
+   <div class="span9 offset1">
+      <div class="login">
+         <div class="login-screen">
+            <div class="login-icon">
+               <img src="images/login/icon.png" alt="Welcome to Mail App" />
+               <h4>Welcome to <small>{{title}}</small></h4>
+            </div>
 
-<div class="row" style="margin-top:70px;">
-   <div class="span4 offset4">
-      <div class="well">
-
-         <form id="login-form" accept-charset="utf-8" style="margin:0;" method="POST" action="/admin/login">
-            <fieldset>
-               <legend>Please sign in</legend>
-               <div class="alert alert-block alert-danger fade in">
-                  <button type="button" class="close" data-dismiss="alert">×</button>
-                  <p>This email is taken</p>
+            <div class="login-form">
+               <div class="control-group">
+                  <input type="text" class="login-field" value="" placeholder="Enter your name" id="login-name" />
+                  <label class="login-field-icon icon-user" for="login-name"></label>
                </div>
 
-               <input placeholder="E-mail" class="input-block-level" id="email" type="text" name="email" value="{{email}}"/>
-               <input placeholder="Password" class="input-block-level" id="password" type="password" name="password"/>
-               <a class="pull-right" href="#">Forgot password?</a>
-               <label class="checkbox">
-                  <input name="remember" type="checkbox" value="Remember Me"> Remember Me
-               </label>
-               <input class="btn btn-large btn-info btn-block" type="submit" value="{{translate "signin" session.language mapping}}">
-               <br>
+               <div class="control-group">
+                  <input type="password" class="login-field" value="" placeholder="Password" id="login-pass" />
+                  <label class="login-field-icon icon-lock" for="login-pass"></label>
+               </div>
 
-               <p class="text-center"><a href="#" class="btnflip card">Need to register?</a></p>
-            </fieldset>
-         </form>
-
+               <a class="btn btn-primary btn-large btn-block" href="#">Login</a>
+               <a class="login-link" href="#">Lost your password?</a>
+            </div>
+         </div>
       </div>
    </div>
 </div>
+
+
+
+<!--<div class="row" style="margin-top:70px;">-->
+   <!--<div class="span4 offset4">-->
+      <!--<div class="well">-->
+
+         <!--<form id="login-form" accept-charset="utf-8" style="margin:0;" method="POST" action="/admin/login">-->
+            <!--<fieldset>-->
+               <!--<legend>Please sign in</legend>-->
+               <!--<div class="alert alert-block alert-danger fade in">-->
+                  <!--<button type="button" class="close" data-dismiss="alert">×</button>-->
+                  <!--<p>This email is taken</p>-->
+               <!--</div>-->
+
+               <!--<input placeholder="E-mail" class="input-block-level" id="email" type="text" name="email" value="{{email}}"/>-->
+               <!--<input placeholder="Password" class="input-block-level" id="password" type="password" name="password"/>-->
+               <!--<a class="pull-right" href="#">Forgot password?</a>-->
+               <!--<label class="checkbox">-->
+                  <!--<input name="remember" type="checkbox" value="Remember Me"> Remember Me-->
+               <!--</label>-->
+               <!--<input class="btn btn-large btn-info btn-block" type="submit" value="{{translate "signin" session.language mapping}}">-->
+               <!--<br>-->
+
+               <!--<p class="text-center"><a href="#" class="btnflip card">Need to register?</a></p>-->
+            <!--</fieldset>-->
+         <!--</form>-->
+
+      <!--</div>-->
+   <!--</div>-->
+<!--</div>-->
 

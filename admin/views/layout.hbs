@@ -12,13 +12,8 @@
    <meta name="description" content="">
    <meta name="author" content="">
 
-   <!--<link href="/static/public/css/bootstrap.css" rel="stylesheet">-->
-   <!--<link href="/static/public/css/bootstrap-responsive.css" rel="stylesheet">-->
-   <!--<link href="/static/public/css/font-awesome.min.css" rel="stylesheet">-->
-   <!--<link href="/static/public/css/flat-ui.css" rel="stylesheet">-->
-   <!--<link href="/static/public/css/admin/admin.css" rel="stylesheet">-->
-   {{{css_render css "core"}}}
-   {{{css_render css "admin"}}}
+   {{{css_render css "admin_core"}}}
+   {{{css_render css "admin_dashboard"}}}
    {{{block "stylesheets"}}}
 
    <link rel="shortcut icon" href="/static/public/img/favicon.ico">
@@ -101,14 +96,12 @@
    <div class="container">
       {{! The message from the app for the user }}
       {{#if message}}
-         <div class="container">
-            <div class='alert fade in'>
-               {{! ALERT: use ../session.language because language is outside the message array }}
-               <a class='close' data-dismiss='alert' href='#'>&times;</a>
-                  {{#each message}}
-                     {{translate msg ../session.language ../mapping}}<br>
-                  {{/each}}
-            </div>
+         <div class='alert fade in'>
+            {{! ALERT: use ../session.language because language is outside the message array }}
+            <a class='close' data-dismiss='alert' href='#'>&times;</a>
+               {{#each message}}
+                  {{translate msg ../session.language ../mapping}}<br>
+               {{/each}}
          </div>
       {{/if}}
 
@@ -125,19 +118,13 @@
       </footer>
    </div>
 
-   <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
-   <!--<script src="/static/public/js/bootstrap.min.js"></script>-->
-   <!--<script src="/static/public/js/bootstrap-select.js"></script>-->
-   <!--<script src='/static/public/js/bootstrap-switch.js'></script>-->
-   <!--<script src="/static/public/js/flatui-checkbox.js"></script>-->
-   <!--<script src="/static/public/js/flatui-radio.js"></script>-->
-   {{{js_render js "core"}}}
-   {{{js_render js "admin"}}}
+   {{{js_render js "admin_core"}}}
+   {{{js_render js "admin_dashboard"}}}
 
 
-   <script src="/static/public/js/admin/admin.core.js"></script>
-   <!--<script src="/static/public/js/admin/admin.dashboard.js"></script>-->
-   <script src="/static/public/js/admin/gnmenu.js"></script>
+   <!--<script src="/static/public/js/admin/admin.core.js"></script>-->
+   <!--&lt;!&ndash;<script src="/static/public/js/admin/admin.dashboard.js"></script>&ndash;&gt;-->
+   <!--<script src="/static/public/js/admin/gnmenu.js"></script>-->
    <script>
       new gnMenu( document.getElementById( 'gn-menu' ) );
    </script>
