@@ -351,8 +351,6 @@ Config.prototype.Application = function (app) {
    app.use(express.methodOverride());
    app.use(express.bodyParser());
 
-//   app.use(expressValidator);
-
 
    // Set the default locals
    app.use(function (req, res, next) {
@@ -395,21 +393,23 @@ Config.prototype.Application = function (app) {
    app.use(app.router);
 
 
-   // Set static private file directory, use dedicated mounted path /static/private
-   app.use('/static/private', function (req, res, next) {
-      // check athentication
-      if (req.session.user) {
-         express.static(__dirname + '/private')(req, res, next);
-      } else {
-         utils.applog('error', 'Request invalid file from not authorized address: ' + req.connection.remoteAddress);
-         next();
-      }
-   });
+//   // Set static private file directory, use dedicated mounted path /static/private
+//   app.use('/static/private', function (req, res, next) {
+//      // check athentication
+//      if (req.session.user) {
+//         express.static(__dirname + '/private')(req, res, next);
+//      } else {
+//         utils.applog('error', 'Request invalid file from not authorized address: ' + req.connection.remoteAddress);
+//         next();
+//      }
+//   });
+
+   // Set static public file directory for ADMIN ONLY, use dedicated mounted path /static/public
+   app.use('admin/static/public', express.static(__dirname + '/admin/public'));
 
    // Set static public file directory, use dedicated mounted path /static/public
    app.use('/static/public', express.static(__dirname + '/public'));
 
-//   app.use(app.router); // moved above static
 
 //   // Set error view if env is development
 //   if ('development' == process.env.NODE_ENV) {
