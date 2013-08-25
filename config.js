@@ -405,7 +405,7 @@ Config.prototype.Application = function (app) {
 //   });
 
    // Set static public file directory for ADMIN ONLY, use dedicated mounted path /static/public
-   app.use('admin/static/public', express.static(__dirname + '/admin/public'));
+   app.use('/admin/static/public', express.static(__dirname + '/admin/public'));
 
    // Set static public file directory, use dedicated mounted path /static/public
    app.use('/static/public', express.static(__dirname + '/public'));

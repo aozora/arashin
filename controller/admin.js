@@ -30,6 +30,11 @@ function route(app) {
    });
 
 
+   // Set login route
+   app.get('/admin/posts', utils.accesslog, function (req, res) {
+      res.render('post-list');
+   });
+
 }
 
 exports.route = route;

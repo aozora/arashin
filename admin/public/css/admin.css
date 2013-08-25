@@ -77,9 +77,9 @@
 		height: 60px;
 		font-size: 13px;
 
--webkit-box-sizing: border-box;
-   -moz-box-sizing: border-box;
-   box-sizing: border-box;
+/*-webkit-box-sizing: border-box;*/
+   /*-moz-box-sizing: border-box;*/
+   /*box-sizing: border-box;*/
 
 }
 
@@ -395,6 +395,9 @@ input.gn-search:focus {
    /*width: 313px;*/
 }
 
+a.list-group-item {
+   text-decoration: none;
+}
 
 /* Dashboard
    -------------------------------------------------- */
