@@ -20,7 +20,6 @@
       "connect-redis":"*",
       "jugglingdb": ">= 0.2.0-34",
       "jugglingdb-redis": ">= 0.0.2-2",
-      "express-validator":"*",
       "mongodb":"*",
       "async":"*",
       "nodemailer":"*",
@@ -40,7 +39,5 @@
       "request":"*"
   	},
    "domains": [
-      "www.marcellop.com",
-      "marcellop.com"
    ]
 }
