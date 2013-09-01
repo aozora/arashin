@@ -25,88 +25,109 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
    <![endif]-->
 
-   <!--<div class="navbar navbar-fixed-top">-->
-      <!--<div class="navbar-inner">-->
-         <!--<div class="container-fluid">-->
-            <!--<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">-->
-               <!--<span class="icon-bar"></span>-->
-               <!--<span class="icon-bar"></span>-->
-               <!--<span class="icon-bar"></span>-->
-            <!--</a>-->
-            <!--<a class="brand" href="/">{{title}}</a>-->
+   <nav class="navbar navbar-default" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+         <a class="navbar-brand" href="#">ArashiN</a>
+      </div>
 
-            <!--<div class="nav-collapse collapse">-->
-               <!--<ul class="nav">-->
-                  <!--{{{ createMenu session.language session.role mapping}}}-->
-               <!--</ul>-->
-               <!--<div class='nav pull-right'>-->
-                  <!--{{! ISSUE ON IPHONE: https://github.com/twitter/bootstrap/issues/4756 }}-->
-                  <!--<li class='dropdown'><a href='#' class='dropdown-toggle' data-toggle='dropdown' data-target='#'>{{translate "language" session.language mapping}} <b class='caret'></b></a>-->
-                     <!--<ul class='dropdown-menu'>-->
-                        <!--{{{availableLanguage mapping}}}-->
-                     <!--</ul>-->
-                  <!--</li>-->
-               <!--</div>-->
-            <!--</div>-->
-            <!--&lt;!&ndash;/.nav-collapse &ndash;&gt;-->
-         <!--</div>-->
-      <!--</div>-->
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+         <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Dashboard</a></li>
+            <li><a href="#">Link</a></li>
+            <li class="dropdown">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+               <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+               </ul>
+            </li>
+         </ul>
+         <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+               <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+         </form>
+         <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Link</a></li>
+            <li class="dropdown">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+               <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li><a href="#">Separated link</a></li>
+               </ul>
+            </li>
+         </ul>
+      </div><!-- /.navbar-collapse -->
+   </nav>
+
+   <!--<div class="container">-->
+      <!--<ul id="gn-menu" class="gn-menu-main">-->
+         <!--<li class="gn-trigger">-->
+            <!--<a class="gn-icon gn-icon-menu"><span>Menu</span></a>-->
+            <!--<nav class="gn-menu-wrapper">-->
+               <!--<div class="gn-scroller">-->
+                  <!--<ul class="gn-menu">-->
+                     <!--<li class="gn-search-item">-->
+                        <!--<input placeholder="Search" type="search" class="gn-search">-->
+                        <!--&lt;!&ndash;<a class="gn-icon gn-icon-search"><span>Search</span></a>&ndash;&gt;-->
+                        <!--<a class="gn-icon gn-icon-search"><span>Search</span></a>-->
+                     <!--</li>-->
+                     <!--<li>-->
+                        <!--<a class="gn-icon gn-icon-download">Downloads</a>-->
+                        <!--<ul class="gn-submenu">-->
+                           <!--<li><a class="gn-icon gn-icon-illustrator">Vector Illustrations</a></li>-->
+                           <!--<li><a class="gn-icon gn-icon-photoshop">Photoshop files</a></li>-->
+                        <!--</ul>-->
+                     <!--</li>-->
+                     <!--<li><a class="gn-icon gn-icon-cog">Settings</a></li>-->
+                     <!--<li><a class="gn-icon gn-icon-help">Help</a></li>-->
+                     <!--<li>-->
+                        <!--<a class="gn-icon gn-icon-archive">Archives</a>-->
+                        <!--<ul class="gn-submenu">-->
+                           <!--<li><a class="gn-icon gn-icon-article">Articles</a></li>-->
+                           <!--<li><a class="gn-icon gn-icon-pictures">Images</a></li>-->
+                           <!--<li><a class="gn-icon gn-icon-videos">Videos</a></li>-->
+                        <!--</ul>-->
+                     <!--</li>-->
+                  <!--</ul>-->
+               <!--</div>&lt;!&ndash; /gn-scroller &ndash;&gt;-->
+            <!--</nav>-->
+         <!--</li>-->
+         <!--<li><a href="#">ArashiN</a></li>-->
+         <!--<li><a class="codrops-icon codrops-icon-prev" href="/admin/"><span>Dashboard</span></a></li>-->
+         <!--<li><a class="codrops-icon codrops-icon-drop" href="#"><span>Log out</span></a></li>-->
+      <!--</ul>-->
    <!--</div>-->
 
+
+   {{! The message from the app for the user }}
+   {{#if message}}
    <div class="container">
-      <ul id="gn-menu" class="gn-menu-main">
-         <li class="gn-trigger">
-            <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
-            <nav class="gn-menu-wrapper">
-               <div class="gn-scroller">
-                  <ul class="gn-menu">
-                     <li class="gn-search-item">
-                        <input placeholder="Search" type="search" class="gn-search">
-                        <!--<a class="gn-icon gn-icon-search"><span>Search</span></a>-->
-                        <a class="gn-icon gn-icon-search"><span>Search</span></a>
-                     </li>
-                     <li>
-                        <a class="gn-icon gn-icon-download">Downloads</a>
-                        <ul class="gn-submenu">
-                           <li><a class="gn-icon gn-icon-illustrator">Vector Illustrations</a></li>
-                           <li><a class="gn-icon gn-icon-photoshop">Photoshop files</a></li>
-                        </ul>
-                     </li>
-                     <li><a class="gn-icon gn-icon-cog">Settings</a></li>
-                     <li><a class="gn-icon gn-icon-help">Help</a></li>
-                     <li>
-                        <a class="gn-icon gn-icon-archive">Archives</a>
-                        <ul class="gn-submenu">
-                           <li><a class="gn-icon gn-icon-article">Articles</a></li>
-                           <li><a class="gn-icon gn-icon-pictures">Images</a></li>
-                           <li><a class="gn-icon gn-icon-videos">Videos</a></li>
-                        </ul>
-                     </li>
-                  </ul>
-               </div><!-- /gn-scroller -->
-            </nav>
-         </li>
-         <li><a href="#">ArashiN</a></li>
-         <li><a class="codrops-icon codrops-icon-prev" href="#"><span>Dashboard</span></a></li>
-         <li><a class="codrops-icon codrops-icon-drop" href="#"><span>Log out</span></a></li>
-      </ul>
+      <div class='alert fade in'>
+         {{! ALERT: use ../session.language because language is outside the message array }}
+         <a class='close' data-dismiss='alert' href='#'>&times;</a>
+            {{#each message}}
+               {{translate msg ../session.language ../mapping}}<br>
+            {{/each}}
+      </div>
    </div>
+   {{/if}}
 
-
-   <div class="container">
-      {{! The message from the app for the user }}
-      {{#if message}}
-         <div class='alert fade in'>
-            {{! ALERT: use ../session.language because language is outside the message array }}
-            <a class='close' data-dismiss='alert' href='#'>&times;</a>
-               {{#each message}}
-                  {{translate msg ../session.language ../mapping}}<br>
-               {{/each}}
-         </div>
-      {{/if}}
-
-      {{{body}}}
-   </div>
+   {{{body}}}
 
    {{{js_render js "admin_core"}}}
    {{{js_render js "admin_dashboard"}}}
@@ -114,9 +135,7 @@
    <!--<script src="/static/public/js/admin/admin.core.js"></script>-->
    <!--&lt;!&ndash;<script src="/static/public/js/admin/admin.dashboard.js"></script>&ndash;&gt;-->
    <!--<script src="/static/public/js/admin/gnmenu.js"></script>-->
-   <script>
-      new gnMenu( document.getElementById( 'gn-menu' ) );
-   </script>
+
    {{{block "scripts"}}}
 
 </body>

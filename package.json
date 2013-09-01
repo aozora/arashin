@@ -31,7 +31,8 @@
       "lodash": "*",
 		"socket.io":"*",
       "passport" : "*",
-      "piler": "*"
+      "piler": "*",
+      "less": "*"
 	},
  	"devDependencies": {
       "grunt": "~0.4.1",
